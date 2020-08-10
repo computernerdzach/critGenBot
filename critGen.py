@@ -76,7 +76,7 @@ async def on_message(message):
               "Nothing unusual happens.",
               ]
 
-    whisperText = "result whispered to roller"
+    whisperText = f'{client.user} whispered result to {message.author}'
 
     if '!hit' in message.content.lower():
         response = random.choice(hits)
