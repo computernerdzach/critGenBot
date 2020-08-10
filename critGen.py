@@ -72,13 +72,6 @@ async def on_message(message):
               "Nothing unusual happens.",
               ]
 
-    # if message.content == 'hit!':
-    #     response = random.choice(hits)
-    #     await message.channel.send(response)
-    # elif message.content == 'miss!':
-    #     response = random.choice(misses)
-    #     await message.channel.send(response)
-
     whisperText = "result whispered to thewasabiking's console"
 
     if 'hit!' in message.content.lower():
