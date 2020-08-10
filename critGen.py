@@ -14,7 +14,10 @@ client = discord.Client()
 @client.event
 async def on_ready():
     print(f'{client.user} has connected to Discord!')
-
+    channel1 = client.get_channel(742155179981406298)
+    channel2 = client.get_channel(710363986528567296)
+    await channel1.send('Bite my shiny metal ass!')
+    await channel2.send('Bite my shiny metal ass!')
 
 @client.event
 async def on_message(message):
@@ -88,21 +91,6 @@ async def on_message(message):
             await message.channel.send(whisperText)
         else:
             await message.channel.send(response)
-
-    # if 'hit!' in message.content.lower():
-    #     response = random.choice(hits)
-    #     if 'whisper' in message.content.lower():
-    #         print(response)
-    #         await message.channel.send(whisperText)
-    #     else:
-    #         await message.channel.send(response)
-    # elif 'miss!' in message.content.lower():
-    #     response = random.choice(hits)
-    #     if 'whisper' in message.content.lower():
-    #         print(response)
-    #         await message.channel.send(whisperText)
-    #     else:
-    #         await message.channel.send(response)
 
 
 client.run(TOKEN)
