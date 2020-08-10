@@ -10,10 +10,10 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 
 client = discord.Client()
 
+
 @client.event
 async def on_ready():
     print(f'{client.user} has connected to Discord!')
-
 
 
 @client.event
@@ -72,21 +72,37 @@ async def on_message(message):
               "Nothing unusual happens.",
               ]
 
-    whisperText = "result whispered to thewasabiking's console"
+    whisperText = "result whispered to roller"
 
     if 'hit!' in message.content.lower():
         response = random.choice(hits)
         if 'whisper' in message.content.lower():
-            print(response)
+            await message.author.send(response)
             await message.channel.send(whisperText)
         else:
             await message.channel.send(response)
     elif 'miss!' in message.content.lower():
         response = random.choice(hits)
         if 'whisper' in message.content.lower():
-            print(response)
+            await message.author.send(response)
             await message.channel.send(whisperText)
         else:
             await message.channel.send(response)
+
+    # if 'hit!' in message.content.lower():
+    #     response = random.choice(hits)
+    #     if 'whisper' in message.content.lower():
+    #         print(response)
+    #         await message.channel.send(whisperText)
+    #     else:
+    #         await message.channel.send(response)
+    # elif 'miss!' in message.content.lower():
+    #     response = random.choice(hits)
+    #     if 'whisper' in message.content.lower():
+    #         print(response)
+    #         await message.channel.send(whisperText)
+    #     else:
+    #         await message.channel.send(response)
+
 
 client.run(TOKEN)
