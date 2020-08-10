@@ -1,7 +1,6 @@
 # bot.py
 import os
 import random
-
 import discord
 from dotenv import load_dotenv
 
@@ -9,7 +8,6 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 channel1ID = int(os.getenv('CHANNEL1'))
 channel2ID = int(os.getenv('CHANNEL2'))
-
 client = discord.Client()
 
 
@@ -80,18 +78,22 @@ async def on_message(message):
 
     whisperText = "result whispered to roller"
 
-    if 'hit!' in message.content.lower():
+    if '!hit' in message.content.lower():
         response = random.choice(hits)
         if 'whisper' in message.content.lower():
             await message.author.send(response)
             await message.channel.send(whisperText)
+            print(f'{message.author} whispered a roll ' + response)
         else:
             await message.channel.send(response)
-    elif 'miss!' in message.content.lower():
+            print(f'{message.author} made a roll ' + response)
+    elif '!miss' in message.content.lower():
         response = random.choice(hits)
         if 'whisper' in message.content.lower():
             await message.author.send(response)
             await message.channel.send(whisperText)
+            print(f'{message.author} whispered a roll ' + response)
         else:
             await message.channel.send(response)
+            print(f'{message.author} made a roll ' + response)
 client.run(TOKEN)
