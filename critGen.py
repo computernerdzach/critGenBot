@@ -12,8 +12,22 @@ client = discord.Client()
 greetings = ['Bite my shiny metal ass!',
              "I'm still alive, baby!",
              "Kill all humans!",
-             "critGenBot does not condone the cool cool crime of robbery!"
+             "critGenBot does not condone the cool cool crime of robbery!",
+             "Well, if jacking on will make strangers think I'm cool, I'll do it.",
+             "Of all the friends I've had, you're the first.",
+             "Shut up baby, I know it!"
              ]
+byes = ["Cheese it!",
+        "I’m so embarrassed. I wish everybody else was dead.",
+        "I got ants in my butt, and I needs to strut.",
+        "Oh, no room for Bender, huh? Fine! I’ll go build my own lunar lander, with blackjack and hookers. In fact, forget the lunar lander and the blackjack. Ahh, screw the whole thing!",
+        "Game’s over, losers! I have all the money. Compare your lives to mine and then kill yourselves.",
+        "O’ cruel fate, to be thusly boned! Ask not for whom the bone bones—it bones for thee.",
+        "We’ll soon stage an attack on technology worthy of being chronicled in an anthem by Rush!",
+        "This is the worst kind of discrimination there is: the kind against me!",
+        "Anything less than immortality is a complete waste of time.",
+        "Hahahahaha. Oh wait you’re serious. Let me laugh even harder."
+        ]
 
 
 @client.event
@@ -82,7 +96,6 @@ async def on_message(message):
               ]
 
     whisper_text = f'{client.user} whispered result to {message.author}'
-    bye = "Cheese it!"
 
     if '!hit' in message.content.lower():
         response = random.choice(hits)
@@ -103,6 +116,6 @@ async def on_message(message):
             await message.channel.send(response)
             print(f'{message.author} made a roll\n    ' + response)
     elif "!goodbye" or "!bye" in message.content.lower():
-        await message.channel.send(bye)
+        await message.channel.send(random.choice(byes))
         await client.close()
 client.run(TOKEN)
