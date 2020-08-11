@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
+# Channel 1 is Zach&Andrew Virtual Rolls and Channel 2 is CodeTalk Bot Testing
 channel1ID = int(os.getenv('CHANNEL1'))
 channel2ID = int(os.getenv('CHANNEL2'))
 client = discord.Client()
@@ -28,15 +29,18 @@ byes = ["Cheese it!",
         "Anything less than immortality is a complete waste of time.",
         "Hahahahaha. Oh wait you’re serious. Let me laugh even harder."
         ]
+quotes = []
+quotes += greetings + byes
+channel_greeting = random.choice(greetings)
 
 
 @client.event
 async def on_ready():
-    print(f'{client.user} has connected to Discord!')
+    print(f'{client.user} has connected to Discord!\n    ' + channel_greeting)
     channel1 = client.get_channel(channel1ID)
     channel2 = client.get_channel(channel2ID)
-    await channel1.send(random.choice(greetings))
-    await channel2.send(random.choice(greetings))
+    await channel1.send(channel_greeting)
+    await channel2.send(channel_greeting)
 
 
 @client.event
@@ -115,7 +119,13 @@ async def on_message(message):
         else:
             await message.channel.send(response)
             print(f'{message.author} made a roll\n    ' + response)
+    elif '!quote' in message.content.lower():
+        bender_quote = random.choice(quotes)
+        await message.channel.send(bender_quote)
+        print(f'{message.author} quoted Bender.\n    ' + bender_quote)
     elif "!goodbye" or "!bye" in message.content.lower():
-        await message.channel.send(random.choice(byes))
+        so_long = random.choice(byes)
+        await message.channel.send(so_long)
+        print(f'{message.author} dismissed critGenBot\n    ' + so_long)
         await client.close()
 client.run(TOKEN)
