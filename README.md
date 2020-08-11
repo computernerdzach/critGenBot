@@ -12,7 +12,7 @@ Hits and misses are rolled with the following syntax:
 !Miss
 !mISs
 
-the roll will be direct messaged to the roller if the word "whisper" is used
+the roll will be direct messaged to the roller if the word "whisper" is used:
 whisper !hit
 !MISS WHISPER
 
