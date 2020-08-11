@@ -3,19 +3,25 @@ A Python driven Discord bot that will announce or whisper the results of either 
 critically, the .env file is missing, which contains the bot's token as well as channel ids
 
 Hits and misses are rolled with the following syntax:
-!hit
-!HIT
-!Hit
-!HiT
-!miss
-!MISS
-!Miss
-!mISs
+!hit;
+!HIT;
+!Hit;
+!HiT;
+!miss;
+!MISS;
+!Miss;
+!mISs;
 
 the roll will be direct messaged to the roller if the word "whisper" is used:
-whisper !hit
-!MISS WHISPER
+whisper !hit;
+!MISS WHISPER;
+
+You can quote Bender randomly:
+!quote;
+!QUOTE;
+!Quote;
+!qUOtE;
 
 The bot can be told to terminate with the following commands:
-!goodbye
-!bye
+!goodbye;
+!bye;
