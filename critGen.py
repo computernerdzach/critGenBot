@@ -10,6 +10,11 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 channel1ID = int(os.getenv('CHANNEL1'))
 channel2ID = int(os.getenv('CHANNEL2'))
 client = discord.Client()
+help_message = """Welcome to critGenBot!\n
+To roll a critical hit or miss, type '!hit' or '!MISS'\n
+To keep your roll secret, include the word 'whisper' and critGenBot will DM you the result.\n
+To quote Bender from Futurama, type '!quote'\n
+Help menu can be accessed by typing '!help'"""
 greetings = ['Bite my shiny metal ass!',
              "I'm still alive, baby!",
              "Hey sexy mama. Wanna kill all humans?",
@@ -29,17 +34,16 @@ byes = ["Cheese it!",
         "Anything less than immortality is a complete waste of time.",
         "Hahahahaha. Oh wait you’re serious. Let me laugh even harder."
         ]
-quotes = []
-quotes += greetings + byes
-channel_greeting = random.choice(greetings)
+quotes = greetings + byes
 
 
 @client.event
 async def on_ready():
+    channel_greeting = random.choice(greetings) + "\n" + help_message
     print(f'{client.user} has connected to Discord!\n    ' + channel_greeting)
     channel1 = client.get_channel(channel1ID)
     channel2 = client.get_channel(channel2ID)
-    await channel1.send(channel_greeting)
+    # await channel1.send(channel_greeting)
     await channel2.send(channel_greeting)
 
 
@@ -77,7 +81,7 @@ async def on_message(message):
             "Knockout. DC 16 CON save or unconscious. Prone. Stunned 2 rounds. Triple Damage.",
             "Final Strike. DC 18 CON save or die. Prone 1d4 squares back. Stunned 3rounds. QuadrupleDamage.",
             ]
-    misses = ["Seppuku.Knocked prone. Disarmed 1d3 squares away. Stunned 2 rounds. Critical hit on self.",
+    misses = ["Seppuku. Knocked prone. Disarmed 1d3 squares away. Stunned 2 rounds. Critical hit on self.",
               "Total Failure. Knocked prone. Disarmed 1d3 squares away. Stunned 1 round.  Critical hit on self.",
               "Predictable Parry.Knocked prone. Disarmed. Stunned 1 round. Damage to ally (self).",
               "Bloody Mess.Bleeding 1d6 per round. Disarmed. Stunned 1 round. Damage to self.",
@@ -119,13 +123,18 @@ async def on_message(message):
         else:
             await message.channel.send(response)
             print(f'{message.author} made a roll\n    ' + response)
+    elif '!help' in message.content.lower():
+        await message.channel.send(help_message)
     elif '!quote' in message.content.lower():
         bender_quote = random.choice(quotes)
         await message.channel.send(bender_quote)
         print(f'{message.author} quoted Bender.\n    ' + bender_quote)
-    elif "!goodbye" or "!bye" in message.content.lower():
+    elif "!bye" in message.content.lower() or "!goodbye" in message.content.lower():
         so_long = random.choice(byes)
         await message.channel.send(so_long)
         print(f'{message.author} dismissed critGenBot\n    ' + so_long)
         await client.close()
+    else:
+        if message.content.startswith('!', 0, len(message.content)):
+            return
 client.run(TOKEN)
