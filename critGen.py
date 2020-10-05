@@ -6,15 +6,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
-# Channel 1 is Zach&Andrew Virtual Rolls and Channel 2 is CodeTalk Bot Testing
-channel1ID = int(os.getenv('CHANNEL1'))
-channel2ID = int(os.getenv('CHANNEL2'))
 client = discord.Client()
-help_message = """Welcome to critGenBot!\n
-To roll a critical hit or miss, type '!hit' or '!MISS'\n
-To keep your roll secret, include the word 'whisper' and critGenBot will DM you the result.\n
-To quote Bender from Futurama, type '!quote'\n
-Help menu can be accessed by typing '!help'"""
+help_message = """***Welcome to critGenBot!***
+**To roll a critical hit or miss, type '!hit' or '!MISS'**
+**To keep your roll secret, include the word 'whisper' and critGenBot will DM you the result.**
+**To quote Bender from Futurama, type '!quote'**
+**Help menu can be accessed by typing '!help'**"""
 greetings = ['Bite my shiny metal ass!',
              "I'm still alive, baby!",
              "Hey sexy mama. Wanna kill all humans?",
@@ -39,12 +36,7 @@ quotes = greetings + byes
 
 @client.event
 async def on_ready():
-    channel_greeting = random.choice(greetings) + "\n" + help_message
-    print(f'{client.user} has connected to Discord!\n    ' + channel_greeting)
-    channel1 = client.get_channel(channel1ID)
-    channel2 = client.get_channel(channel2ID)
-    # await channel1.send(channel_greeting)
-    await channel2.send(channel_greeting)
+    print(f'{client.user} has connected to Discord!')
 
 
 @client.event
@@ -83,23 +75,23 @@ async def on_message(message):
             ]
     misses = ["Seppuku. Knocked prone. Disarmed 1d3 squares away. Stunned 2 rounds. Critical hit on self.",
               "Total Failure. Knocked prone. Disarmed 1d3 squares away. Stunned 1 round.  Critical hit on self.",
-              "Predictable Parry.Knocked prone. Disarmed. Stunned 1 round. Damage to ally (self).",
+              "Predictable Parry. Knocked prone. Disarmed. Stunned 1 round. Damage to ally (self).",
               "Bloody Mess.Bleeding 1d6 per round. Disarmed. Stunned 1 round. Damage to self.",
-              "Gut Check.Damage to ally (self).  Incapacitated for 1 round.",
-              "InYour Face.Damage to self. Incapacitated for 1 round.",
-              "Tipping the Scales.Opponent has advantage and attacker has disadvantage for 1 round.",
-              "Mighty Disarm.Disarmed 1d6 squares away. Disadvantage 1 round.",
-              "Terrible Maneuver.Nearest opponent gets a free attack with advantage as an immediate action.",
-              "The Bigger They Are...Knocked back 1d3 squares before falling prone. ",
-              "Butterfingers.Disarmed. Disadvantage on next attack roll.",
-              "Dropped Guard.Nearest opponent gets a free attack as an immediate action, if possible",
-              "Vision Impairment.Blinded 1 round.",
-              "Loss of Resolve.The next saving throw in combat automatically fails.",
+              "Gut Check. Damage to ally (self).  Incapacitated for 1 round.",
+              "In Your Face. Damage to self. Incapacitated for 1 round.",
+              "Tipping the Scales. Opponent has advantage and attacker has disadvantage for 1 round.",
+              "Mighty Disarm. Disarmed 1d6 squares away. Disadvantage 1 round.",
+              "Terrible Maneuver. Nearest opponent gets a free attack with advantage as an immediate action.",
+              "The Bigger They Are... Knocked back 1d3 squares before falling prone. ",
+              "Butterfingers. Disarmed. Disadvantage on next attack roll.",
+              "Dropped Guard. Nearest opponent gets a free attack as an immediate action, if possible",
+              "Vision Impairment. Blinded 1 round.",
+              "Loss of Resolve. The next saving throw in combat automatically fails.",
               "Partial Blow. Half damage to self.",
-              "Wide Open.Provoke attack of opportunity from closest melee opponent, if possible.",
-              "Poor Karma.The next saving throw in combat is at disadvantage.",
-              "Slow to Respond.No bonus action or reaction next round.",
-              "Tough Recovery.Go last in initiative next round.",
+              "Wide Open. Provoke attack of opportunity from closest melee opponent, if possible.",
+              "Poor Karma. The next saving throw in combat is at disadvantage.",
+              "Slow to Respond. No bonus action or reaction next round.",
+              "Tough Recovery. Go last in initiative next round.",
               "Nothing unusual happens.",
               ]
 
@@ -110,21 +102,22 @@ async def on_message(message):
         if 'whisper' in message.content.lower():
             await message.author.send(response)
             await message.channel.send(whisper_text)
-            print(f'{message.author} whispered a roll\n    ' + response)
+            print(f'{message.author} whispered a hit roll\n    ' + response)
         else:
             await message.channel.send(response)
-            print(f'{message.author} made a roll\n    ' + response)
+            print(f'{message.author} made a hit roll\n    ' + response)
     elif '!miss' in message.content.lower():
-        response = random.choice(hits)
+        response = random.choice(misses)
         if 'whisper' in message.content.lower():
             await message.author.send(response)
             await message.channel.send(whisper_text)
-            print(f'{message.author} whispered a roll\n    ' + response)
+            print(f'{message.author} whispered a miss roll\n    ' + response)
         else:
             await message.channel.send(response)
-            print(f'{message.author} made a roll\n    ' + response)
+            print(f'{message.author} made a miss roll\n    ' + response)
     elif '!help' in message.content.lower():
         await message.channel.send(help_message)
+        print(f'{message.author} asked for help.')
     elif '!quote' in message.content.lower():
         bender_quote = random.choice(quotes)
         await message.channel.send(bender_quote)
@@ -134,7 +127,4 @@ async def on_message(message):
         await message.channel.send(so_long)
         print(f'{message.author} dismissed critGenBot\n    ' + so_long)
         await client.close()
-    else:
-        if message.content.startswith('!', 0, len(message.content)):
-            return
 client.run(TOKEN)
